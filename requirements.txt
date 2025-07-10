@@ -1,0 +1,5 @@
+gguf-py
+gguf
+psutil
+requests
+pycuda
