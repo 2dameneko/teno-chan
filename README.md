@@ -8,6 +8,7 @@
 
 ## Features
 * **GGUF Model Analysis**: Parses single/multi-part local/huggingface GGUF files to extract tensor metadata
+* **CUDA_VISIBLE_DEVICES** - respect environment variable
 * **Resource-aware Optimization**: Considers GPU VRAM, system RAM, and context requirements
 * **KV Cache Calculation**: Precisely calculates key-value cache size for given context length
 * **Expert Tensor Identification**: Automatically detects MoE expert tensors for CPU offloading
