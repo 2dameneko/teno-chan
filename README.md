@@ -4,7 +4,7 @@
     <img src="https://count.getloli.com/get/@teno-chan?theme=asoul&padding=4" alt="Visitor count"><br>
 </div>
 
-**teno-chan** is an optimization assistant for mix of experts (MOE) LLM models like DeepSeek-R1 and Qwen3 (30B, 235B) in GGUF format that generates optimal experts tensor offloading configuration for llama.cpp. It analyzes your GPU/CPU resources and model architecture to create custom command-line arguments that maximize inference speed while staying within VRAM limits.
+**teno-chan** is an optimization assistant for mix of experts (MOE) LLM models like DeepSeek-R1 and Qwen3 (30B, 235B) in GGUF format that generates optimal experts tensor (ffn_up_exps, ffn_down_exps, ffn_gate_exps) offloading configuration for llama.cpp. It analyzes your GPU/CPU resources and model architecture to create custom command-line arguments that maximize inference speed while staying within VRAM limits.
 
 ## Features
 * **GGUF Model Analysis**: Parses single/multi-part local/huggingface GGUF files to extract tensor metadata
