@@ -958,7 +958,6 @@ def optimize(
         
     return command.strip()
 
-
 def compress_tensor_overrides(tensor_map: Dict[str, str]) -> List[Tuple[str, str]]:
     """Compress tensor overrides into regex patterns."""
     base_groups = defaultdict(lambda: defaultdict(list))
@@ -1007,13 +1006,56 @@ def compress_tensor_overrides(tensor_map: Dict[str, str]) -> List[Tuple[str, str
             if start == end:
                 num_pattern = str(start)
             else:
-                num_pattern = "|".join(str(i) for i in range(start, end + 1))
+                patterns = []
+                current = start
+                while current <= end:
+                    d = len(str(current))
+                    next_boundary = 10**d
+                    sub_end = min(end, next_boundary - 1)
+                    if d == 1:
+                        if current == sub_end:
+                            patterns.append(str(current))
+                        else:
+                            patterns.append(f"[{current}-{sub_end}]")
+                    elif d == 2:
+                        if current == 10 and sub_end == 99:
+                            patterns.append("[1-9][0-9]")
+                        else:
+                            low_tens = current // 10
+                            high_tens = sub_end // 10
+                            if low_tens == high_tens:
+                                units_start = current % 10
+                                units_end = sub_end % 10
+                                if units_start == units_end:
+                                    patterns.append(f"{low_tens}{units_start}")
+                                else:
+                                    patterns.append(f"{low_tens}[{units_start}-{units_end}]")
+                            else:
+                                low_part = f"{low_tens}[{current % 10}-9]"
+                                high_part = f"{high_tens}[0-{sub_end % 10}]"
+                                mid_pattern = ""
+                                if high_tens - low_tens > 1:
+                                    if high_tens - low_tens == 2:
+                                        mid_t = low_tens + 1
+                                        mid_pattern = f"{mid_t}[0-9]"
+                                    else:
+                                        mid_pattern = f"[{low_tens+1}-{high_tens-1}][0-9]"
+                                if mid_pattern:
+                                    patterns.append(f"{low_part}|{mid_pattern}|{high_part}")
+                                else:
+                                    patterns.append(f"{low_part}|{high_part}")
+                    else:
+                        if current == sub_end:
+                            patterns.append(str(current))
+                        else:
+                            patterns.append("|".join(str(i) for i in range(current, sub_end + 1)))
+                    current = sub_end + 1
+                num_pattern = "|".join(patterns)
             pattern = re.escape(prefix) + "(" + num_pattern + ")" + re.escape(rest)
             compressed_rules.append((pattern, device))
             
     compressed_rules.sort(key=lambda x: (x[0], x[1]))
     return compressed_rules
-
 
 def _parse_gpu_memory_spec(spec_str: str, gpu_count: int) -> List[Union[float, int]]:
     """Parse GPU memory specification string."""

@@ -1,5 +1,5 @@
 rem It is better to use direct indication of the order of devices used, just as specified when starting llama-cpp
-rem set CUDA_VISIBLE_DEVICES=1,0,2,3
+set CUDA_VISIBLE_DEVICES=0,1
 
 call venv\Scripts\activate
 python teno-chan.py ^
