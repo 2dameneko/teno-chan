@@ -77,6 +77,7 @@ Example output:
    - Gigabytes: `--gpu-memory 31.3,22.6`
 
 ## Version History
+* **0.2** (Enhanced Regex Compression):
 * **0.1** (Initial Release):
 
 ## Important Notes
