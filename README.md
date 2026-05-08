@@ -1,8 +1,6 @@
 # teno-chan
 
-<div align="center">
-    <img src="https://count.getloli.com/get/@teno-chan?theme=asoul&padding=4" alt="Visitor count"><br>
-</div>
+## OBSOLETE as of 2026. Use [cat-moe-balancer](https://github.com/2dameneko/cat-moe-balancer) or the --fit llama argument
 
 **teno-chan** is an [llama.cpp](https://github.com/ggerganov/llama.cpp) optimization assistant for mix of experts (MOE) LLM models like [DeepSeek-R1](https://huggingface.co/unsloth/DeepSeek-R1-0528-GGUF), [Qwen3-235B-A22B-GGUF](https://huggingface.co/unsloth/Qwen3-235B-A22B-GGUF), [Qwen3-30B-A3B](https://huggingface.co/unsloth/Qwen3-30B-A3B-GGUF) in GGUF format that generates optimal [experts tensor](https://unsloth.ai/blog/deepseek-r1-0528) (ffn_up_exps, ffn_down_exps, ffn_gate_exps) offloading configuration. It analyzes your GPU/CPU resources and model architecture to create custom command-line arguments that maximize inference speed while staying within VRAM limits.
 
